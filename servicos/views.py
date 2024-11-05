@@ -5,9 +5,11 @@ from .models import Servico
 # ServicoAdicional
 from fpdf import FPDF
 from io import BytesIO
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 
+@login_required
 def novo_servico(request):
     if request.method == "GET":
         form = FormServico()
@@ -19,16 +21,19 @@ def novo_servico(request):
             return HttpResponse('Salvo com sucesso')
         else:
             return render(request, 'novo_servico.html', {'form': form})
-        
+
+@login_required
 def listar_servico(request):
     if request.method == "GET":
         servicos = Servico.objects.all()
         return render(request, 'listar_servico.html', {'servicos': servicos})
     
+@login_required
 def servico(request, identificador):
     servico = get_object_or_404(Servico, identificador=identificador)
     return render(request, 'servico.html', {'servico': servico})
 
+@login_required
 def gerar_os(request, identificador):
     servico = get_object_or_404(Servico, identificador=identificador)
 
