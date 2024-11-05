@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Cliente, Carro
 import re
@@ -7,7 +7,10 @@ import json
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def clientes(request):
     if request.method == "GET":
         clientes_list = Cliente.objects.all()
@@ -44,7 +47,7 @@ def clientes(request):
 
         return HttpResponse('Teste')       
 
-
+@login_required
 def att_cliente(request):
     id_cliente = request.POST.get('id_cliente')
     cliente = Cliente.objects.filter(id=id_cliente)
@@ -56,6 +59,7 @@ def att_cliente(request):
     data = {'cliente': cliente_json, 'carros': carros_json, 'cliente_id': cliente_id}
     return JsonResponse(data)
 
+@login_required
 def excluir_carro(request, id):
     try:
         carro = Carro.objects.get(id=id)
@@ -64,6 +68,7 @@ def excluir_carro(request, id):
     except:
         return redirect(reverse('clientes')+f'?aba=att_cliente&id_cliente={id}')
 
+@login_required
 @csrf_exempt
 def update_carro(request, id):
     nome_carro = request.POST.get('carro')
@@ -83,6 +88,7 @@ def update_carro(request, id):
 
     return HttpResponse(id)
 
+@login_required
 def update_cliente(request, id):
     body = json.loads(request.body)
 

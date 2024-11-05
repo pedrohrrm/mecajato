@@ -1,0 +1,82 @@
+<style>
+    /* Estilo Geral */
+    body {
+        background-color: #f0f4f8; /* Cor de fundo suave */
+        font-family: 'Arial', sans-serif; /* Fonte do corpo */
+    }
+    .login-container {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 50px auto; /* Espaçamento no topo */
+        text-align: center;
+    }
+    .login-container h2 {
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 28px; /* Tamanho maior para o título */
+        font-weight: bold; /* Negrito para destacar */
+    }
+    .login-container form {
+        display: flex;
+        flex-direction: column;
+    }
+    .login-container input[type="text"], 
+    .login-container input[type="password"] {
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px; /* Tamanho da fonte dos inputs */
+        transition: border-color 0.3s;
+    }
+    .login-container input[type="text"]:focus, 
+    .login-container input[type="password"]:focus {
+        border-color: #007bff; /* Cor do contorno ao focar */
+        outline: none; /* Remove o contorno padrão */
+    }
+    .login-container button {
+        padding: 12px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s;
+        margin-top: 10px; /* Espaçamento acima do botão */
+    }
+    .login-container button:hover {
+        background-color: #0056b3; /* Cor ao passar o mouse */
+    }
+    .signup-link {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #555;
+    }
+    .signup-link a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold; /* Negrito para o link */
+    }
+    .signup-link a:hover {
+        text-decoration: underline; /* Sublinhado ao passar o mouse */
+    }
+    .divider {
+        margin: 20px 0;
+        border-top: 1px solid #e0e0e0;
+    }
+</style>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <div class="divider"></div>
+    <p class="signup-link">Não tem uma conta? <a href="{% url 'signup' %}">Cadastre-se aqui</a></p>
+</div>

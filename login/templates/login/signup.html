@@ -1,0 +1,118 @@
+<style>
+  .container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .password-strength-bar {
+    height: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    transition: width 0.3s;
+  }
+
+  .password-strength-bar.weak {
+    background-color: red;
+  }
+
+  .password-strength-bar.medium {
+    background-color: orange;
+  }
+
+  .password-strength-bar.strong {
+    background-color: green;
+  }
+</style>
+<div class="container">
+    <h2>Cadastro</h2>
+    <form method="post" id="signupForm">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Nome de Usuário:</label>
+            <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Senha:</label>
+            <div class="input-group">
+                <input type="password" id="password" name="password" class="form-control" required oninput="checkPasswordStrength()">
+                <div class="input-group-append">
+                    <button type="button" id="togglePassword" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">
+                        👁
+                    </button>
+                </div>
+            </div>
+            <div id="passwordStrength" class="password-strength-bar"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirm_password">Confirmação de Senha:</label>
+            <div class="input-group">
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                <div class="input-group-append">
+                    <button type="button" id="toggleConfirmPassword" class="btn btn-outline-secondary" onclick="toggleConfirmPasswordVisibility()">
+                        👁
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <p class="login-link">Já tem uma conta? <a href="{% url 'login' %}">Faça login aqui</a></p>
+    </form>
+</div>
+
+<script>
+    function checkPasswordStrength() {
+        const password = document.getElementById('password').value;
+        const strengthBar = document.getElementById('passwordStrength');
+        
+        let strength = 0;
+
+        if (password.length >= 6) strength++; // At least 6 characters
+        if (/[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password)) strength++; // At least one uppercase, one lowercase, and one number
+        if (/[^A-Za-z0-9]/.test(password)) strength++; // At least one special character
+
+        // Clear previous classes
+        strengthBar.className = 'password-strength-bar';
+
+        // Set strength class
+        if (strength === 1) {
+            strengthBar.classList.add('weak');
+            strengthBar.style.width = '33%';
+        } else if (strength === 2) {
+            strengthBar.classList.add('medium');
+            strengthBar.style.width = '66%';
+        } else if (strength === 3) {
+            strengthBar.classList.add('strong');
+            strengthBar.style.width = '100%';
+        } else {
+            strengthBar.style.width = '0';
+        }
+    }
+
+    function togglePasswordVisibility() {
+        const passwordField = document.getElementById('password');
+        const toggleButton = document.getElementById('togglePassword');
+        passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
+        toggleButton.textContent = passwordField.type === 'password' ? '👁' : '👁‍🗨'; // Change icon based on visibility
+    }
+
+    function toggleConfirmPasswordVisibility() {
+        const confirmPasswordField = document.getElementById('confirm_password');
+        const toggleButton = document.getElementById('toggleConfirmPassword');
+        confirmPasswordField.type = confirmPasswordField.type === 'password' ? 'text' : 'password';
+        toggleButton.textContent = confirmPasswordField.type === 'password' ? '👁' : '👁‍🗨'; // Change icon based on visibility
+    }
+</script>

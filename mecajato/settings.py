@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # MyApps
     'clientes',
     'servicos',
+    'login',
 ]
 
 MIDDLEWARE = [
