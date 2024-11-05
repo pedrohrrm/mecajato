@@ -42,3 +42,35 @@
     display: none;
 
 }
+
+.calendar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit; /* Mantém a cor do texto */
+}
+
+.calendar-icon i {
+    font-size: 30px; /* Ajuste o tamanho do ícone conforme necessário */
+    margin-right: 10px; /* Espaço entre o ícone e o texto */
+}
+
+.card-dashboard {
+    background-color: var(--main-color);
+    width: 50%;
+    margin-left: 10px;
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card-dashboard:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+}
+
+.text-card {
+    font-size: 25px;
+}

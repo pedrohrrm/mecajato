@@ -3,9 +3,11 @@
 
 {% block 'head' %}
     <link rel="stylesheet" href="{% static 'clientes/css/clientes.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 {% endblock %}
 
 {% block 'dashboard' %}
+<div class="container">
     <div class="container">
         <div class="row">
             <div onclick="exibir_form('1')" class="col-md card-dashboard">
@@ -16,7 +18,15 @@
                 <p class="text-card">Atualizar clientes</p>
             </div> 
 
+            <!-- Ícone de Calendário -->
+            <div class="col-md card-dashboard">
+                <a href="{% url 'calendario' %}" class="calendar-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                    <p class="text-card">Ver Calendário</p>
+                </a>
+            </div>
         </div>
+    </div>
 
             <div id="adicionar-cliente" class="adicionar-cliente">
                 <form action="{% url 'clientes' %}" method="POST">{% csrf_token %}

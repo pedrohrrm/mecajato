@@ -5,6 +5,8 @@ from .models import Servico
 # ServicoAdicional
 from fpdf import FPDF
 from io import BytesIO
+from django.http import JsonResponse
+from django.shortcuts import render
 
 def novo_servico(request):
     if request.method == "GET":
@@ -62,6 +64,19 @@ def gerar_os(request, identificador):
     return FileResponse(pdf_bytes, as_attachment=True, filename=f"os-{servico.protocole}.pdf")
 
 
+def calendario(request):
+    return render(request, 'calendar.html')
+
+def servicos_json(request):
+    servicos = Servico.objects.all()
+    eventos = []
+    for servico in servicos:
+        eventos.append({
+            'title': servico.titulo,
+            'start': f"{servico.data_inicio}T{servico.horario}",  # Formato ISO 8601
+            'end': f"{servico.data_entrega}T{servico.horario}" if servico.data_entrega else None,
+        })
+    return JsonResponse(eventos, safe=False)
 # def servico_adicional(request):
 #     identificador_servico = request.POST.get('identificador_servico')
 #     titulo = request.POST.get('titulo')

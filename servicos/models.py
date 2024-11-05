@@ -3,7 +3,7 @@ from secrets import token_hex, token_urlsafe
 from django.db import models
 from clientes.models import Cliente
 from .choices import ChoicesCategoriaManutencao
-from datetime import datetime
+from datetime import datetime, time
 
 class CategoriaManutencao(models.Model):
     titulo = models.CharField(max_length=3, choices=ChoicesCategoriaManutencao.choices)
@@ -29,6 +29,7 @@ class Servico(models.Model):
     finalizado = models.BooleanField(default=False)
     protocole = models.CharField(max_length=52, null=True, blank=True)
     identificador = models.CharField(max_length=24, null=True, blank=True)
+    horario = models.TimeField(null=True, blank=True)
     # servicos_adicionais = models.ManyToManyField(ServicoAdicional)
 
     def __str__(self) -> str:
